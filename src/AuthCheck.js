@@ -19,6 +19,15 @@ const msalConfig = {
 const AuthCheck = () => {
     const { accounts } = useMsal();
     const navigate = useNavigate();
+    const { instance } = useMsal();
+
+  const handleLogin = () => {
+    instance.loginRedirect()
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
 
     // Check if the user is authenticated
     const isLoggedIn = accounts.length > 0;
@@ -73,14 +82,23 @@ const AuthCheck = () => {
         </Typography>
         <div style={{width:`100%`,height:10,
         }}></div>
-        <MicrosoftLogin 
-          clientId="356fe2ef-4e6c-4719-bfa5-1b2996c41fcd" 
-          buttonTheme="light" 
-          redirectUri='http://localhost:3000'
-          authCallback={()=>{    window.location.reload(); // Refreshes the page
-          }}
-          
-        />
+         <Button
+      variant={'contained'}
+      color={'primary'}
+      onClick={handleLogin}
+      sx={{
+        minWidth: 120, // Minimum width
+        borderRadius: 8, // Standard border radius
+        padding: '8px 16px', // Padding for the button
+        fontWeight: 'bold', // Font weight
+        transition: 'background-color 0.3s', // Transition for hover effect
+        '&:hover': {
+          backgroundColor:  '#1976d2', // Custom hover effect
+        },
+      }}
+    >
+      {"Sign in with Microsoft"}
+    </Button>
       </div>
       </Modal>
                 </div>
